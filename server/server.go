@@ -77,7 +77,8 @@ func getWorkouts(c echo.Context) error {
 func main() {
 	// assinging forms and their webpages
 	e := echo.New()
-	e.File("/", "public/index.html")
+	e.File("/", "public/workouts.html")
+	e.File("/landing", "public/index.html")
 	e.File("/form", "public/form.html")
 	e.POST("/submit", handleSubmit)
 	e.GET("/getWorkouts", getWorkouts)
