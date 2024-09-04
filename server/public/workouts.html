@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Your Page Title</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(52, 5px);
+            grid-template-rows: repeat(7, 5px);
+            gap: 5px;
+            padding: 20px;
+        }
+        .grid-item {
+            width: 5px;
+            height: 5px;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>GitFit Tracker Page</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/">LandingPage</a></li>
+            <li><a href="/form">Submit Workout</a></li>
+            <li><a href="/getWorkouts">Json Workouts</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="grid-container" id="grid"></div>
+        <script>
+            const gridContainer = document.getElementById('grid');
+
+            for (let i = 0; i < 365; i++) {
+                const square = document.createElement('div');
+                square.className = 'grid-item';
+                gridContainer.appendChild(square);
+            }
+        </script>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 x.com/chrisgyman. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
