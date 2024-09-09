@@ -44,18 +44,18 @@ func handleSubmit(c echo.Context) error {
 	return c.String(http.StatusOK, "Form submitted successfully!")
 }
 
-func getWorkouts(c echo.Context) error {
+func workouts(c echo.Context) error {
 	//connec to db
 	db, err := sql.Open("sqlite3", "./database.db")
 	if err != nil {
-	    log.Fatal(err)
+		return err 
 	}
 	defer db.Close()
 
 	//get all rows from workouts table
 	rows, err := db.Query("SELECT * FROM workouts")
 	if err != nil {
-	    log.Fatal(err)
+		return err 
 	}
 	defer rows.Close()
 
@@ -66,21 +66,21 @@ func getWorkouts(c echo.Context) error {
 	    var workout, datetime, notes string
 	    err = rows.Scan(&id, &workout, &datetime, &notes)
 	    if err != nil {
-		log.Fatal(err)
+		    return err
+	    log.Fatal(err)
 	    }
 
 	    workouts = append(workouts, fmt.Sprintf("ID: %d, Workout: %s, Datetime: %s, Notes: %s", id, workout, datetime, notes))
 	}
-	return c.String(http.StatusOK, fmt.Sprintf("Workouts: \n%s", strings.Join(workouts, "\n")))
+	return c.JSON(http.StatusOK, fmt.Sprintf("Workouts: \n%s", strings.Join(workouts, "\n")))
 }
 
 func main() {
 	// assinging forms and their webpages
 	e := echo.New()
-	e.File("/", "public/workouts.html")
-	e.File("/landing", "public/index.html")
+	e.File("/", "public/index.html")
 	e.File("/form", "public/form.html")
 	e.POST("/submit", handleSubmit)
-	e.GET("/getWorkouts", getWorkouts)
+	e.GET("/workouts", workouts)
 	e.Logger.Fatal(e.Start(":1323"))
 }
